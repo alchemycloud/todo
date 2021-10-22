@@ -1,0 +1,70 @@
+<mat-table *ngIf="model.length != 0"
+           [dataSource]="model">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortById"
+                         i18n="@@TODOS_ID">Id</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="userUsername">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByUserUsername"
+                         i18n="@@TODOS_USER_USERNAME">User username</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.userUsername}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="task">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByTask"
+                         i18n="@@TODOS_TASK">Task</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.task}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByDate"
+                         i18n="@@TODOS_DATE">Date</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.date| date:'yyyy-MM-dd'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByStatus"
+                         i18n="@@TODOS_STATUS">Status</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <mat-label data-qa="status">{{item.status}}</mat-label>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="editTodo">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByEditTodo"
+                         i18n="@@TODOS_EDIT_TODO">Edit todo</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <button mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="onEditTodoClick(item)"
+                    data-qa="editTodo">
+                <ng-container i18n="@@TODOS_EDIT_TODO">Edit todo</ng-container>
+            </button>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="deleteTodo">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByDeleteTodo"
+                         i18n="@@TODOS_DELETE_TODO">Delete todo</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <button mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="onDeleteTodoClick(item)"
+                    data-qa="deleteTodo">
+                <ng-container i18n="@@TODOS_DELETE_TODO">Delete todo</ng-container>
+            </button>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let item; columns: displayedColumns;"
+             (click)="select(item.id)"></mat-row>
+</mat-table>
+<div *ngIf="model.length == 0"
+     i18n="@@TODOS_NO_RESULTS">
+    No results found
+</div>

@@ -1,0 +1,7 @@
+# Server backend
+/backend/ @dvesin
+
+# Client webapp
+/webapp/ @dvesin
+# UI tests
+/uiTest/

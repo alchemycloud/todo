@@ -1,0 +1,90 @@
+<mat-table *ngIf="model.length != 0"
+           [dataSource]="model">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortById"
+                         i18n="@@USERS_ID">Id</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByFirstName"
+                         i18n="@@USERS_FIRST_NAME">First name</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.firstName}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByLastName"
+                         i18n="@@USERS_LAST_NAME">Last name</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.lastName}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByRole"
+                         i18n="@@USERS_ROLE">Role</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <mat-label data-qa="role">{{item.role}}</mat-label>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByUsername"
+                         i18n="@@USERS_USERNAME">Username</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.username}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="passwordHash">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByPasswordHash"
+                         i18n="@@USERS_PASSWORD_HASH">Password hash</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.passwordHash}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="viewUserTodos">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByViewUserTodos"
+                         i18n="@@USERS_VIEW_USER_TODOS">View user todos</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <button mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="onViewUserTodosClick(item)"
+                    data-qa="viewUserTodos">
+                <ng-container i18n="@@USERS_VIEW_USER_TODOS">View user todos</ng-container>
+            </button>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="editUser">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByEditUser"
+                         i18n="@@USERS_EDIT_USER">Edit user</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <button mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="onEditUserClick(item)"
+                    data-qa="editUser">
+                <ng-container i18n="@@USERS_EDIT_USER">Edit user</ng-container>
+            </button>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="deleteUser">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByDeleteUser"
+                         i18n="@@USERS_DELETE_USER">Delete user</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <button mat-stroked-button
+                    color="primary"
+                    type="button"
+                    (click)="onDeleteUserClick(item)"
+                    data-qa="deleteUser">
+                <ng-container i18n="@@USERS_DELETE_USER">Delete user</ng-container>
+            </button>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let item; columns: displayedColumns;"
+             (click)="select(item.id)"></mat-row>
+</mat-table>
+<div *ngIf="model.length == 0"
+     i18n="@@USERS_NO_RESULTS">
+    No results found
+</div>

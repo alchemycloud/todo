@@ -1,0 +1,96 @@
+<form (ngSubmit)="onSubmitClick()"
+      name="createTodo"
+      [formGroup]="formGroup"
+      data-qa="createTodo"
+      novalidate>
+    <button mat-dialog-close
+            mat-icon-button
+            type="button"
+            class="c-dialog__close">
+        <mat-icon fontSet="fal"
+                  fontIcon="fa-times"></mat-icon>
+    </button>
+    <h1 mat-dialog-title
+        class="c-dialog__header"
+        i18n="@@CREATE_TODO_TITLE">Title</h1>
+    <mat-dialog-content class="c-dialog__content">
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@CREATE_TODO_USER_ID">User id</mat-label>
+            <input matInput
+                   formControlName="userId"
+                   required
+                   data-qa="userId"
+                   type="number"
+                   i18n-placeholder="@@CREATE_TODO_USER_ID"
+                   placeholder="User id"
+                   autocomplete="off" />
+            <mat-error *ngIf="userIdControl.hasError('required')"
+                       i18n="@@CREATE_TODO_USER_ID_REQUIRED">User id is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@CREATE_TODO_TASK">Task</mat-label>
+            <input matInput
+                   formControlName="task"
+                   required
+                   data-qa="task"
+                   type="text"
+                   i18n-placeholder="@@CREATE_TODO_TASK"
+                   placeholder="Task"
+                   autocomplete="off" />
+            <mat-error *ngIf="taskControl.hasError('required')"
+                       i18n="@@CREATE_TODO_TASK_REQUIRED">Task is required</mat-error>
+            <mat-error *ngIf="taskControl.hasError('minlength')"
+                       i18n="@@CREATE_TODO_TASK_MIN">Task min 1 characters</mat-error>
+            <mat-error *ngIf="taskControl.hasError('maxlength')"
+                       i18n="@@CREATE_TODO_TASK_MAX">Task max 255 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@CREATE_TODO_DATE">Date</mat-label>
+            <input matInput
+                   formControlName="date"
+                   [ngxMatDatetimePicker]="date"
+                   required
+                   data-qa="date"
+                   i18n-placeholder="@@CREATE_TODO_DATE"
+                   placeholder="Date"
+                   autocomplete="off">
+            <mat-datepicker-toggle matSuffix
+                                   [for]="date"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #date
+                                     [enableMeridian]="true"></ngx-mat-datetime-picker>
+            <mat-error *ngIf="dateControl.hasError('required')"
+                       i18n="@@CREATE_TODO_DATE_REQUIRED">Date is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@CREATE_TODO_STATUS">Status</mat-label>
+            <status-drop-down data-qa="status"
+                              formControlName="status"
+                              required="true"
+                              i18n-placeholder="@@CREATE_TODO_STATUS"
+                              placeholder="Status"> </status-drop-down>
+            <mat-error *ngIf="statusControl.hasError('required')"
+                       i18n="@@CREATE_TODO_STATUS_REQUIRED">Status is required</mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions class="c-dialog__actions"
+                        align="end">
+        <button mat-button
+                type="button"
+                color="primary"
+                (click)="onCloseDialogClick()"
+                data-qa="close">
+            <ng-container i18n="@@CREATE_TODO_CLOSE_BUTTON">Close button</ng-container>
+        </button>
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="submitDisabled || !formGroup.valid"
+                data-qa="submit">
+            <ng-container i18n="@@CREATE_TODO_SUBMIT">Submit</ng-container>
+        </button>
+    </mat-dialog-actions>
+</form>
