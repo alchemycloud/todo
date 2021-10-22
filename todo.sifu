@@ -1,115 +1,185 @@
 todo project[
-  url www.todo.com
-  namespace com.todo
-  version 1.0.0.0
-  environments (prod)
-  developer (dvesin, nmilinkovic, olahnikola, bgvoka, profesor)
+    url www.todo.com
+    namespace com.todo
+    version 1 . 0 . 0 . 0
+    environments prod
+    developer(dvesin, nmilinkovic, olahnikola, bgvoka, profesor)
 ](
-  # WEB SERVER
-  backend server[
-    owners (dvesin)
-    template java-springboot(tests fabut)
-    security (principal User, role UserRole, type(username))
-  ](
-    #ENUMS
-    UserRole enum(ADMIN, MEMBER)
-    Status enum(NOT_STARTED, IN_PROGRESS, DONE)
-    USER_NOT_FOUND badRequest
 
+    backend server[
+        owners(dvesin)
+        template java-springboot(tests fabut)
+        security(
+            principal User
+            role UserRole
+            type username
+        )
+    ](
 
-    #MODELS
-    User model(
-      firstName text[min 1, max 40, searchable]
-      lastName text[min 1, max 60]
-    )
-    Todo model(
-      user User
-      task text[min 1, max 255]
-      date date
-      status Status
-    )
+        UserRole enum(
+            ADMIN
+            MEMBER
+        )
 
-    #APIs
-    UserApi api(
-      user crud[model User, rest, secured ADMIN]
-      users read[select from User, rest, secured ADMIN]
-      userTodos read[
-        select from Todo
-        where Todo.user == user
-        orderable by Todo.task
-        rest
-        secured ADMIN
-      ]
-    )
+        Status enum(
+            NOT_STARTED
+            IN_PROGRESS
+            DONE
+        )
 
-    TodoApi api(
-      todo crud[model Todo, rest]
-      todos read [select from Todo join User on Todo.user,
-        response list dto(Todo.id, userUsername User.username, Todo.task, Todo.date, Todo.status), rest, secured (ADMIN, MEMBER)]
-    )
-  )
-  # WEB APP
-  webapp client[
-    owners (dvesin)
-    connectedTo backend
-    template js-angular7
-    path /webportal
-    home todosPage (ADMIN, MEMBER)
-  ](
+        USER_NOT_FOUND badRequest
 
-    usersPage page[path /users, secured ADMIN](
-      addUser button{on click open createUser(none){
-        on closed do users.load
-      }}
+        User model(
+            firstName text[min 1, max 40, searchable]
+            lastName text[min 1, max 60]
+        )
 
-      users table[load UserApi.users](
-        viewUserTodos button{on click fire ViewTodos(item.id)}
-        editUser button{on click open editUser(item.id)}
-        deleteUser button{on click open deleteUser(item.id)}
-      ){
-        ViewTodos event(id integer)
-        external {
-          on ViewTodos do userTodos.reload(event.id, none, none)
-        }
-      }
+        Todo model(
+            user User
+            task text[min 1, max 255]
+            date date
+            status Status
+        )
 
-      userTodos table[input (*, * , *) , load UserApi.userTodos]
+        UserApi api(
 
-    )
-    createUser form[submit UserApi.createUser]{
-      on success {close}
-    }
+            user crud[model User, rest, secured ADMIN]
 
-    editUser form[load UserApi.readUser, submit UserApi.updateUser]{
-      on success {close}
-    }
+            users read[
+                select from User
+                rest
+                secured ADMIN
+            ]
 
-    deleteUser form[load UserApi.readUser, submit UserApi.deleteUser]{
-      on success {close}
-    }
+            userTodos read[
+                select from Todo
+                     where Todo.user == user
+                     orderable by Todo.task
+                rest
+                secured ADMIN
+            ]
+        )
 
-    todosPage page[path /todos, secured (ADMIN, MEMBER)](
-        addTodo button{on click open createTodo(none){
-         on closed do todos.load
-        }}
+        TodoApi api(
 
-        todos table[load TodoApi.todos](
-            editTodo button{on click open editTodo(item.id)}
-            deleteTodo button{on click open deleteTodo(item.id)}
+            todo crud[model Todo, rest]
+
+            todos read[
+                select from Todo
+                     join User on Todo.user
+                response list dto(
+                    Todo.id
+                    userUsername User.username
+                    Todo.task
+                    Todo.date
+                    Todo.status
+                )
+                rest
+                secured(ADMIN, MEMBER)
+            ]
         )
     )
 
-    createTodo form[submit TodoApi.createTodo]{
+    webapp client[
+        owners(dvesin)
+        connectedTo backend
+        template js-angular7
+        path /webportal
+        home todosPage(ADMIN, MEMBER)
+    ](
 
-        on success {close}
-    }
+        usersPage page[
+            path /users
+            secured ADMIN
+        ](
+            addUser button {
+                on click open createUser(none) {
+                    on closed do users.load
+                }
+            }
+            users table[
+                load UserApi.users
+            ](
+                viewUserTodos button {
+                    on click fire ViewTodos(item.id)
+                }
+                editUser button {
+                    on click open editUser(item.id)
+                }
+                deleteUser button {
+                    on click open deleteUser(item.id)
+                }
+            ) {
+                ViewTodos event(id integer)
+                external {
+                    on ViewTodos do userTodos.reload(event.id, none, none)
+                }
+            }
+            userTodos table[
+                input(*, *, *)
+                load UserApi.userTodos
+            ]
+        )
 
-    editTodo form[load TodoApi.readTodo, submit TodoApi.updateTodo]{
-        on success {close}
-    }
+        createUser form[
+            submit UserApi.createUser
+        ] {
+            on success close
+        }
 
-    deleteTodo form[load TodoApi.readTodo, submit TodoApi.deleteTodo]{
-        on success {close}
-    }
-  )
+        editUser form[
+            load UserApi.readUser
+            submit UserApi.updateUser
+        ] {
+            on success close
+        }
+
+        deleteUser form[
+            load UserApi.readUser
+            submit UserApi.deleteUser
+        ] {
+            on success close
+        }
+
+        todosPage page[
+            path /todos
+            secured(ADMIN, MEMBER)
+        ](
+            addTodo button {
+                on click open createTodo(none) {
+                    on closed do todos.load
+                }
+            }
+            todos table[
+                load TodoApi.todos
+            ](
+                editTodo button {
+                    on click open editTodo(item.id)
+                }
+                deleteTodo button {
+                    on click open deleteTodo(item.id)
+                }
+            )
+        )
+
+        createTodo form[
+            submit TodoApi.createTodo
+        ] {
+            on success close
+        }
+
+        editTodo form[
+            load TodoApi.readTodo
+            submit TodoApi.updateTodo
+        ] {
+            on success close
+        }
+
+        deleteTodo form[
+            load TodoApi.readTodo
+            submit TodoApi.deleteTodo
+        ] {
+            on success close
+        }
+    )
 )
