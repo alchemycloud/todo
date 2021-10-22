@@ -1,0 +1,119 @@
+<form (ngSubmit)="onSubmitClick()"
+      name="deleteUser"
+      [formGroup]="formGroup"
+      data-qa="deleteUser"
+      novalidate>
+    <button mat-dialog-close
+            mat-icon-button
+            type="button"
+            class="c-dialog__close">
+        <mat-icon fontSet="fal"
+                  fontIcon="fa-times"></mat-icon>
+    </button>
+    <h1 mat-dialog-title
+        class="c-dialog__header"
+        i18n="@@DELETE_USER_TITLE">Title</h1>
+    <mat-dialog-content class="c-dialog__content">
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@DELETE_USER_FIRST_NAME">First name</mat-label>
+            <input inputAutoFocus
+                   matInput
+                   formControlName="firstName"
+                   required
+                   data-qa="firstName"
+                   type="text"
+                   i18n-placeholder="@@DELETE_USER_FIRST_NAME"
+                   placeholder="First name"
+                   autocomplete="off" />
+            <mat-error *ngIf="firstNameControl.hasError('required')"
+                       i18n="@@DELETE_USER_FIRST_NAME_REQUIRED">First name is required</mat-error>
+            <mat-error *ngIf="firstNameControl.hasError('minlength')"
+                       i18n="@@DELETE_USER_FIRST_NAME_MIN">First name min 1 characters</mat-error>
+            <mat-error *ngIf="firstNameControl.hasError('maxlength')"
+                       i18n="@@DELETE_USER_FIRST_NAME_MAX">First name max 40 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@DELETE_USER_LAST_NAME">Last name</mat-label>
+            <input matInput
+                   formControlName="lastName"
+                   required
+                   data-qa="lastName"
+                   type="text"
+                   i18n-placeholder="@@DELETE_USER_LAST_NAME"
+                   placeholder="Last name"
+                   autocomplete="off" />
+            <mat-error *ngIf="lastNameControl.hasError('required')"
+                       i18n="@@DELETE_USER_LAST_NAME_REQUIRED">Last name is required</mat-error>
+            <mat-error *ngIf="lastNameControl.hasError('minlength')"
+                       i18n="@@DELETE_USER_LAST_NAME_MIN">Last name min 1 characters</mat-error>
+            <mat-error *ngIf="lastNameControl.hasError('maxlength')"
+                       i18n="@@DELETE_USER_LAST_NAME_MAX">Last name max 60 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@DELETE_USER_ROLE">Role</mat-label>
+            <user-role-drop-down data-qa="role"
+                                 formControlName="role"
+                                 required="true"
+                                 i18n-placeholder="@@DELETE_USER_ROLE"
+                                 placeholder="Role"> </user-role-drop-down>
+            <mat-error *ngIf="roleControl.hasError('required')"
+                       i18n="@@DELETE_USER_ROLE_REQUIRED">Role is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@DELETE_USER_USERNAME">Username</mat-label>
+            <input matInput
+                   formControlName="username"
+                   required
+                   data-qa="username"
+                   type="text"
+                   i18n-placeholder="@@DELETE_USER_USERNAME"
+                   placeholder="Username"
+                   autocomplete="off" />
+            <mat-error *ngIf="usernameControl.hasError('required')"
+                       i18n="@@DELETE_USER_USERNAME_REQUIRED">Username is required</mat-error>
+            <mat-error *ngIf="usernameControl.hasError('minlength')"
+                       i18n="@@DELETE_USER_USERNAME_MIN">Username min 3 characters</mat-error>
+            <mat-error *ngIf="usernameControl.hasError('maxlength')"
+                       i18n="@@DELETE_USER_USERNAME_MAX">Username max 128 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline"
+                        class="u-1/1">
+            <mat-label i18n="@@DELETE_USER_PASSWORD_HASH">Password hash</mat-label>
+            <input matInput
+                   formControlName="passwordHash"
+                   required
+                   data-qa="passwordHash"
+                   type="password"
+                   i18n-placeholder="@@DELETE_USER_PASSWORD_HASH"
+                   placeholder="Password hash"
+                   autocomplete="off" />
+            <mat-error *ngIf="passwordHashControl.hasError('required')"
+                       i18n="@@DELETE_USER_PASSWORD_HASH_REQUIRED">Password hash is required</mat-error>
+            <mat-error *ngIf="passwordHashControl.hasError('minlength')"
+                       i18n="@@DELETE_USER_PASSWORD_HASH_MIN">Password hash min 6 characters</mat-error>
+            <mat-error *ngIf="passwordHashControl.hasError('maxlength')"
+                       i18n="@@DELETE_USER_PASSWORD_HASH_MAX">Password hash max 128 characters</mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions class="c-dialog__actions"
+                        align="end">
+        <button mat-button
+                type="button"
+                color="primary"
+                (click)="onCloseDialogClick()"
+                data-qa="close">
+            <ng-container i18n="@@DELETE_USER_CLOSE_BUTTON">Close button</ng-container>
+        </button>
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="submitDisabled || !formGroup.valid"
+                data-qa="submit">
+            <ng-container i18n="@@DELETE_USER_SUBMIT">Submit</ng-container>
+        </button>
+    </mat-dialog-actions>
+</form>

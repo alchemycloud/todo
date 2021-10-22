@@ -1,0 +1,10 @@
+<button mat-stroked-button
+        color="primary"
+        type="button"
+        (click)="onAddUserClick()"
+        data-qa="addUser">
+    <ng-container i18n="@@USERS_PAGE_ADD_USER">Add user</ng-container>
+</button>
+<users (onViewTodos)=onUsersViewTodos($event)
+       data-qa="users"></users>
+<user-todos data-qa="userTodos"></user-todos>

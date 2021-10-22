@@ -1,0 +1,48 @@
+<mat-table *ngIf="model.length != 0"
+           [dataSource]="model"
+           matSort
+           (matSortChange)="sortData($event)"
+           matSortDisableClear="true"
+           [matSortActive]="fields[0] ? fields[0] : '' "
+           [matSortDirection]="directions[0] ? directions[0].toString().toLowerCase() : '' ">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortById"
+                         i18n="@@USER_TODOS_ID">Id</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="userId">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByUserId"
+                         i18n="@@USER_TODOS_USER_ID">User id</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.userId}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="TODO_TASK">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByTask"
+                         mat-sort-header
+                         i18n="@@USER_TODOS_TASK">Task</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.task}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByDate"
+                         i18n="@@USER_TODOS_DATE">Date</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.date| date:'yyyy-MM-dd'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef
+                         data-qa="sortByStatus"
+                         i18n="@@USER_TODOS_STATUS">Status</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <mat-label data-qa="status">{{item.status}}</mat-label>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let item; columns: displayedColumns;"
+             (click)="select(item.id)"></mat-row>
+</mat-table>
+<div *ngIf="model.length == 0"
+     i18n="@@USER_TODOS_NO_RESULTS">
+    No results found
+</div>

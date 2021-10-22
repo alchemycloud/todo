@@ -1,0 +1,13 @@
+# Server backend
+backend/.history/ linguist-generated
+
+backend/src/main/java/com/todo/backend/model/ linguist-generated
+backend/src/main/java/com/todo/backend/api/dto/ linguist-generated
+backend/src/main/java/com/todo/backend/api/*Caller.java linguist-generated
+backend/src/main/java/com/todo/backend/rest/ linguist-generated
+backend/src/main/java/com/todo/backend/sqs/ linguist-generated
+backend/src/main/java/com/todo/backend/spi/ linguist-generated
+
+
+
+uiTests/screenshots/ linguist-generated
