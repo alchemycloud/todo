@@ -606,12 +606,13 @@ todo project[
             username text[input model . username, min 3, max 128]
             passwordHash text[input model . passwordHash, min 6, max 128, sensitive]
             submit button {
-                on click call backend.UserApi.createUser(model . firstName, model . lastName, model . role, model . username, model . passwordHash) {
-                    on success close
-                }
+                on click do submit
             }
         ) {
             init action
+            submit action call backend.UserApi.createUser(model . firstName, model . lastName, model . role, model . username, model . passwordHash) {
+                on success close
+            }
             closed event
             close action fire createUser.closed
         }
@@ -631,13 +632,14 @@ todo project[
             username text[input model . username, min 3, max 128]
             passwordHash text[input model . passwordHash, min 6, max 128, sensitive]
             submit button {
-                on click call backend.UserApi.updateUser(model . id, model . firstName, model . lastName, model . role, model . username,
-                        model . passwordHash) {
-                    on success close
-                }
+                on click do submit
             }
         ) {
             init action do load
+            submit action call backend.UserApi.updateUser(model . id, model . firstName, model . lastName, model . role, model . username,
+                    model . passwordHash) {
+                on success close
+            }
             load action call backend.UserApi.readUser(params . id) {
                 on success {
                     model.id = success.id
@@ -671,12 +673,13 @@ todo project[
             username text[input model . username, min 3, max 128]
             passwordHash text[input model . passwordHash, min 6, max 128, sensitive]
             submit button {
-                on click call backend.UserApi.deleteUser(model . id) {
-                    on success close
-                }
+                on click do submit
             }
         ) {
             init action do load
+            submit action call backend.UserApi.deleteUser(model . id) {
+                on success close
+            }
             load action call backend.UserApi.readUser(params . id) {
                 on success {
                     model.id = success.id
@@ -728,12 +731,13 @@ todo project[
             date date[input model . date]
             status StatusDropDown[input model . status]
             submit button {
-                on click call backend.TodoApi.createTodo(model . userId, model . task, model . date, model . status) {
-                    on success close
-                }
+                on click do submit
             }
         ) {
             init action
+            submit action call backend.TodoApi.createTodo(model . userId, model . task, model . date, model . status) {
+                on success close
+            }
             closed event
             close action fire createTodo.closed
         }
@@ -751,12 +755,13 @@ todo project[
             date date[input model . date]
             status StatusDropDown[input model . status]
             submit button {
-                on click call backend.TodoApi.updateTodo(model . id, model . userId, model . task, model . date, model . status) {
-                    on success close
-                }
+                on click do submit
             }
         ) {
             init action do load
+            submit action call backend.TodoApi.updateTodo(model . id, model . userId, model . task, model . date, model . status) {
+                on success close
+            }
             load action call backend.TodoApi.readTodo(params . id) {
                 on success {
                     model.id = success.id
@@ -787,12 +792,13 @@ todo project[
             date date[input model . date]
             status StatusDropDown[input model . status]
             submit button {
-                on click call backend.TodoApi.deleteTodo(model . id) {
-                    on success close
-                }
+                on click do submit
             }
         ) {
             init action do load
+            submit action call backend.TodoApi.deleteTodo(model . id) {
+                on success close
+            }
             load action call backend.TodoApi.readTodo(params . id) {
                 on success {
                     model.id = success.id
@@ -845,12 +851,13 @@ todo project[
             oldPassword text[input model . oldPassword, min 6, max 255, regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z*&@%+/_'!#$^?:.(\\)\\[\\]{}~\\-]{8,}$", sensitive]
             newPassword text[input model . newPassword, min 6, max 255, regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z*&@%+/_'!#$^?:.(\\)\\[\\]{}~\\-]{8,}$", sensitive]
             submit button {
-                on click call backend.AuthenticationApi.changePassword(model . oldPassword, model . newPassword) {
-                    on success goto signInPage
-                }
+                on click do submit
             }
         ) {
             init action
+            submit action call backend.AuthenticationApi.changePassword(model . oldPassword, model . newPassword) {
+                on success goto signInPage
+            }
         }
 
         users table[
@@ -971,12 +978,13 @@ todo project[
             username text[input model . username, min 3, max 128]
             password text[input model . password, min 6, max 255, sensitive]
             submit button {
-                on click call backend.AuthenticationApi.signIn(model . username, model . password) {
-                    on success if success . role == backend.UserRole.ADMIN or success . role == backend.UserRole.MEMBER goto todosPage
-                }
+                on click do submit
             }
         ) {
             init action
+            submit action call backend.AuthenticationApi.signIn(model . username, model . password) {
+                on success if success . role == backend.UserRole.ADMIN or success . role == backend.UserRole.MEMBER goto todosPage
+            }
         }
 
         signUpForm form[
@@ -996,12 +1004,13 @@ todo project[
             username text[input model . username, min 3, max 128]
             password text[input model . password, min 6, max 255, regex "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z*&@%+/_'!#$^?:.(\\)\\[\\]{}~\\-]{8,}$", sensitive]
             submit button {
-                on click call backend.AuthenticationApi.signUp(model . firstName, model . lastName, model . username, model . password) {
-                    on success goto signInPage
-                }
+                on click do submit
             }
         ) {
             init action
+            submit action call backend.AuthenticationApi.signUp(model . firstName, model . lastName, model . username, model . password) {
+                on success goto signInPage
+            }
         }
 
         UserRoleDropDown dropdown[
