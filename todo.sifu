@@ -7,7 +7,7 @@ todo project[
 ](
 
     backend server[
-        owners(dvesin)
+        owners(duskovesin)
         template springboot(tests fabut)
         security(
             principal User
@@ -81,7 +81,7 @@ todo project[
     )
 
     webapp client[
-        owners(dvesin)
+        owners(duskovesin)
         connectedTo backend
         template angular
         path /webportal
