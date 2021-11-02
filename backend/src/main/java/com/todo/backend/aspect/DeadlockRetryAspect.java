@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.CannotAcquireLockException;
+import org.springframework.dao.TransientDataAccessException;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -29,7 +29,7 @@ public class DeadlockRetryAspect {
         while (true) {
             try {
                 return pjp.proceed();
-            } catch (CannotAcquireLockException e) {
+            } catch (TransientDataAccessException e) {
                 entityManager.clear();
                 AppThreadLocals.forceClear();
                 nrOfAttempts++;

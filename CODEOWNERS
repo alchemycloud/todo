@@ -1,7 +1,7 @@
 # Server backend
-/backend/ @dvesin
+/backend/ @duskovesin
 
 # Client webapp
-/webapp/ @dvesin
+/webapp/ @duskovesin
 # UI tests
 /uiTest/

@@ -3,12 +3,12 @@ todo project[
     namespace com.todo
     version 1 . 0 . 0 . 0
     environments prod
-    developer(dvesin, nmilinkovic, olahnikola, bgvoka, profesor)
+    developer(duskovesin)
 ](
 
     backend server[
-        owners(dvesin)
-        template java-springboot(tests fabut)
+        owners(duskovesin)
+        template springboot(tests fabut)
         security(
             principal User
             role UserRole
@@ -81,7 +81,7 @@ todo project[
     )
 
     webapp client[
-        owners(dvesin)
+        owners(duskovesin)
         connectedTo backend
         template angular
         path /webportal

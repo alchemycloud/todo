@@ -25,7 +25,7 @@ server:
     error:
         include-message: always
 custom:
-    environment: profesor
+    environment: duskovesin
     secretKey: changeme
     accessTokenValidityInSeconds: 300
     refreshTokenValidityInSeconds: 3600
