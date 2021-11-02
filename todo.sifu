@@ -83,7 +83,7 @@ todo project[
     webapp client[
         owners(dvesin)
         connectedTo backend
-        template js-angular7
+        template angular
         path /webportal
         home todosPage(ADMIN, MEMBER)
     ](
