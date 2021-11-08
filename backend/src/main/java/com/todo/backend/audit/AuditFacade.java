@@ -28,7 +28,7 @@ public class AuditFacade {
         auditFacade.flushAfterTransaction(correlationId, principalUsername);
     }
 
-    @Async
+    @Async("multiThreadExecutor")
     public void flushAfterTransaction(String correlationId, Optional<String> principalUsername) {
         final long start = System.currentTimeMillis();
         AppThreadLocals.initialize(Optional.of(correlationId), principalUsername);

@@ -21,12 +21,12 @@ public class QueryCountInterceptor extends EmptyInterceptor {
         if (LOG.isTraceEnabled()) {
             LOG.trace(sql);
         }
-        if (sql.startsWith("select") && AppThreadLocals.getCountQueries() && logQueries) {
+        if (sql.startsWith("select") && AppThreadLocals.getCountQueries()) {
             final Map<String, Integer> map = AppThreadLocals.getQueryMap();
             map.put(sql, map.getOrDefault(sql, 0) + 1);
-        }
-        if (sql.startsWith("select") && AppThreadLocals.getCountQueries()) {
-            AppThreadLocals.setQueryCount(AppThreadLocals.getQueryCount() + 1);
+            if (logQueries) {
+                AppThreadLocals.setQueryCount(AppThreadLocals.getQueryCount() + 1);
+            }
         }
 
         return super.onPrepareStatement(sql);
@@ -46,12 +46,12 @@ public class QueryCountInterceptor extends EmptyInterceptor {
         final List<Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
         list.sort(Entry.comparingByValue());
         Collections.reverse(list);
-        System.out.println("number of calls, query");
+        LOG.debug("number of calls, query");
         int total = 0;
         for (Entry<String, Integer> entry : list) {
             System.out.println(entry.getValue() + ", " + entry.getKey() + "");
             total += entry.getValue();
         }
-        System.out.println("total: " + total + " calls");
+        LOG.debug("total: " + total + " calls");
     }
 }
