@@ -22,10 +22,10 @@ public class QueryCountInterceptor extends EmptyInterceptor {
             LOG.trace(sql);
         }
         if (sql.startsWith("select") && AppThreadLocals.getCountQueries()) {
-            final Map<String, Integer> map = AppThreadLocals.getQueryMap();
-            map.put(sql, map.getOrDefault(sql, 0) + 1);
+            AppThreadLocals.setQueryCount(AppThreadLocals.getQueryCount() + 1);
             if (logQueries) {
-                AppThreadLocals.setQueryCount(AppThreadLocals.getQueryCount() + 1);
+                final Map<String, Integer> map = AppThreadLocals.getQueryMap();
+                map.put(sql, map.getOrDefault(sql, 0) + 1);
             }
         }
 
