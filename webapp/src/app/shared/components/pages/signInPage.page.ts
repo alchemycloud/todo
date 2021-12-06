@@ -24,7 +24,7 @@ export class SignInPage implements OnInit, AfterViewInit {
   model: SignInPageModel = new SignInPageModel();
 
   constructor(private readonly route: ActivatedRoute, private readonly sessionService: SessionService, private readonly router: Router) {
-    if (sessionService.getSessionData() != null && [UserRole.ADMIN, UserRole.MEMBER].includes(this.sessionService.getSessionData().role)) {
+    if (sessionService.getSessionData() !== null && [UserRole.ADMIN, UserRole.MEMBER].includes(this.sessionService.getSessionData().role)) {
       this.router.navigate(['/todos']);
     }
   }

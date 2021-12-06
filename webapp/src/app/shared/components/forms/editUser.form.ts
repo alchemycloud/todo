@@ -63,7 +63,7 @@ export class Closed {
   styleUrls: ['./editUser.form.scss']
 })
 export class EditUser implements OnChanges, OnInit, AfterViewInit {
-  @Input() id: number;
+  @Input() id: number = null;
   @ViewChild(UserRoleDropDown)
   private readonly roleElement: UserRoleDropDown;
   model: EditUserModel = new EditUserModel(null, '', '', null, '', '');
@@ -87,21 +87,21 @@ export class EditUser implements OnChanges, OnInit, AfterViewInit {
   ngOnInit(): void {
     this.init();
     this.formGroup = this.fb.group({
-      'firstName': new FormControl(this.model.firstName, [
+      firstName: new FormControl(this.model.firstName, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(40)], []),
-      'lastName': new FormControl(this.model.lastName, [
+      lastName: new FormControl(this.model.lastName, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)], []),
-      'role': new FormControl(this.model.role, [
+      role: new FormControl(this.model.role, [
         Validators.required], []),
-      'username': new FormControl(this.model.username, [
+      username: new FormControl(this.model.username, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(128)], []),
-      'passwordHash': new FormControl(this.model.passwordHash, [
+      passwordHash: new FormControl(this.model.passwordHash, [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(128)], [])

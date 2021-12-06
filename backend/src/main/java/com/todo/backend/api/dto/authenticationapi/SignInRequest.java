@@ -17,7 +17,7 @@ public class SignInRequest implements Serializable {
     private String username;
 
     @NotNull
-    @Size(min = 6, max = 255)
+    @Size(min = 12, max = 128)
     private String password;
 
     private SignInRequest() {}

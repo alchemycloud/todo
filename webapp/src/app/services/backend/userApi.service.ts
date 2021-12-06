@@ -13,7 +13,7 @@ export class UserApiService {
 
   private header() {
     return new HttpHeaders({
-      'Content-Type': this.applicationJson
+      'content-type': this.applicationJson
     });
   }
 
@@ -22,12 +22,12 @@ export class UserApiService {
 
   }
 
-  deleteUser(request: DeleteUserRequest): Observable<{}> {
-    return this.http.delete<{}>(
+  deleteUser(request: DeleteUserRequest): Observable<Record<string, never>> {
+    return this.http.delete<Record<string, never>>(
       environment.backendUrl + '/user/${request.id}', {
         headers: this.header()
       }).pipe(
-      catchError(this.handleError<{}>('deleteUser'))
+      catchError(this.handleError<Record<string, never>>('deleteUser'))
     );
   }
 
@@ -60,13 +60,13 @@ export class UserApiService {
 
   userTodos(request: UserTodosRequest): Observable<Array<UserTodosResponse>> {
     let params: HttpParams = new HttpParams();
-    if (request.userId != null) {
+    if (request.userId !== null) {
       params = params.set('userId', request.userId.toString());
     }
-    if (request.fields != null) {
+    if (request.fields !== null) {
       params = params.set('fields', request.fields.toString());
     }
-    if (request.directions != null) {
+    if (request.directions !== null) {
       params = params.set('directions', request.directions.toString());
     }
 

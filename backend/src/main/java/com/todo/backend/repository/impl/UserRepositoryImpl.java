@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -101,9 +100,6 @@ public class UserRepositoryImpl extends AbstractSimpleRepositoryImpl<User, UserI
         if (ids.isEmpty()) {
             return Collections.emptyList();
         }
-        return factory.select(getEntityPathBase())
-                .from(QUser.user)
-                .where(QUser.user.id.in(ids.stream().map(UserId::getValue).collect(Collectors.toList())))
-                .fetch();
+        return factory.select(getEntityPathBase()).from(QUser.user).where(QUser.user.id.in(ids.stream().map(UserId::getValue).toList())).fetch();
     }
 }

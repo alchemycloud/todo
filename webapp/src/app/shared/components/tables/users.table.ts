@@ -81,10 +81,8 @@ export class Users implements OnInit, AfterViewInit {
   load() {
     this.userApi.users()
       .subscribe((response: UsersResponse[]) => {
-        this.model = response.map(item => {
-          return new UsersModel(item.id, item.firstName, item.lastName, item.role,
-            item.username, item.passwordHash);
-        });
+        this.model = response.map(item => new UsersModel(item.id, item.firstName, item.lastName, item.role,
+            item.username, item.passwordHash));
         this.resultsLength = response.length;
       }, (_) => {
       });

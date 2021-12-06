@@ -1,4 +1,4 @@
-<mat-table *ngIf="model.length != 0"
+<mat-table *ngIf="model.length !== 0"
            [dataSource]="model"
            matSort
            (matSortChange)="sortData($event)"
@@ -42,7 +42,7 @@
     <mat-row *matRowDef="let item; columns: displayedColumns;"
              (click)="select(item.id)"></mat-row>
 </mat-table>
-<div *ngIf="model.length == 0"
+<div *ngIf="model.length === 0"
      i18n="@@USER_TODOS_NO_RESULTS">
     No results found
 </div>

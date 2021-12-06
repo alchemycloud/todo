@@ -41,12 +41,12 @@ export class Selected {
   ]
 })
 export class UserRoleDropDown implements OnInit, AfterViewInit, ControlValueAccessor, DoCheck, MatFormFieldControl<UserRole>, OnDestroy {
-  @Input() selected: UserRole;
+  @Input() selected: UserRole = null;
   model: Array<UserRole> = [];
   @Output() onSelected = new EventEmitter<Selected>();
   @ViewChild(MatSelect) selectBox: ElementRef;
   isDisabled: boolean;
-  @Output() onTouched = new EventEmitter<Boolean>();
+  @Output() onTouched = new EventEmitter<boolean>();
   ngControl: any;
   needsFiltering: boolean;
   public filterCtrl: FormControl = new FormControl();
@@ -60,7 +60,7 @@ export class UserRoleDropDown implements OnInit, AfterViewInit, ControlValueAcce
 
     // manually setup a value accessor, to avoid circular deps
     this.ngControl = this.injector.get(NgControl);
-    if (this.ngControl != null) {
+    if (this.ngControl !== null) {
       this.ngControl.valueAccessor = this;
     }
 
@@ -183,7 +183,7 @@ export class UserRoleDropDown implements OnInit, AfterViewInit, ControlValueAcce
   focused = false;
 
   get empty() {
-    return this.selected == null;
+    return this.selected === null;
   }
 
   @HostBinding('class.floating')

@@ -27,7 +27,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     },
     whitelistedDomains: [environment.backendUrl]
   }
-}
+};
 
 @Injectable()
 export class DontReuseRoutes implements RouteReuseStrategy {
