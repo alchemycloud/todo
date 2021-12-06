@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
-    <include file="db-changelog-1.0.0.1634887666408.xml" relativeToChangelogFile="true"/>
-    <include file="db-changelog-1.0.0.1638788605576.xml" relativeToChangelogFile="true"/>
+    <changeSet author="generator" id="1.0.0.1638788605576">
+        <!--ADD INDICES-->
+        <createIndex indexName="IND_TOD_S_1D452" tableName="Todo">
+            <column name="status" type="VARCHAR(255)"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

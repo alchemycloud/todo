@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -102,7 +101,7 @@ public class TodoRepositoryImpl extends AbstractSimpleRepositoryImpl<Todo, TodoI
         final QUser qUser = QUser.user;
         return factory.select(qTodo, qUser).from(qTodo).innerJoin(qTodo.user, qUser).orderBy(qTodo.id.asc().nullsLast()).fetch().stream()
                 .map(t -> new TodoTodosTuple(t.get(qTodo), t.get(qUser)))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -110,9 +109,6 @@ public class TodoRepositoryImpl extends AbstractSimpleRepositoryImpl<Todo, TodoI
         if (ids.isEmpty()) {
             return Collections.emptyList();
         }
-        return factory.select(getEntityPathBase())
-                .from(QTodo.todo)
-                .where(QTodo.todo.id.in(ids.stream().map(TodoId::getValue).collect(Collectors.toList())))
-                .fetch();
+        return factory.select(getEntityPathBase()).from(QTodo.todo).where(QTodo.todo.id.in(ids.stream().map(TodoId::getValue).toList())).fetch();
     }
 }

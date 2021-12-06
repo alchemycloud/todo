@@ -131,14 +131,11 @@ public abstract class AbstractDatabaseTest extends Fabut {
     @Override
     public void customAssertEquals(Object expected, Object actual) {
 
-        if (expected instanceof ZonedDateTime && actual instanceof ZonedDateTime) {
-            final ZonedDateTime expectedTime = (ZonedDateTime) expected;
-            final ZonedDateTime actualTime = (ZonedDateTime) actual;
+        if (expected instanceof final ZonedDateTime expectedTime && actual instanceof final ZonedDateTime actualTime) {
             assertTimeWithMargin(expectedTime, actualTime);
-        } else if (expected instanceof AbstractId && actual instanceof AbstractId) {
-            final AbstractId expectedId = (AbstractId) expected;
-            final AbstractId actualId = (AbstractId) actual;
+        } else if (expected instanceof final AbstractId expectedId && actual instanceof final AbstractId actualId) {
             assertEquals(expectedId.getValue(), actualId.getValue());
+
         } else {
             assertEquals(expected, actual);
         }

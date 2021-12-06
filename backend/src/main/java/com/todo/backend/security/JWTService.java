@@ -1,7 +1,6 @@
 package com.todo.backend.security;
 
 import com.todo.backend.config.CustomProperties;
-import com.todo.backend.model.User;
 import com.todo.backend.model.enumeration.UserRole;
 import com.todo.backend.util.TimeUtil;
 import io.jsonwebtoken.Claims;
@@ -9,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Optional;
 import javax.inject.Inject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,18 +25,18 @@ public class JWTService {
 
     @Inject private CustomProperties customProperties;
 
-    public String createAccessToken(User principal, UserRole role) {
+    public String createAccessToken(Optional<String> principalUsername, UserRole role) {
         return Jwts.builder()
-                .claim(PRINCIPAL_USERNAME, principal.getUsername())
+                .claim(PRINCIPAL_USERNAME, principalUsername.orElse(null))
                 .claim(AUTHORITIES_KEY, role)
                 .signWith(SignatureAlgorithm.HS512, customProperties.getSecretKey())
                 .setExpiration(getValidity(customProperties.getAccessTokenValidityInSeconds()))
                 .compact();
     }
 
-    public String createRefreshToken(User principal) {
+    public String createRefreshToken(Optional<String> principalUsername) {
         return Jwts.builder()
-                .claim(PRINCIPAL_USERNAME, principal.getUsername())
+                .claim(PRINCIPAL_USERNAME, principalUsername.orElse(null))
                 .claim(AUTHORITIES_KEY, REFRESH_AUTHORITY)
                 .signWith(SignatureAlgorithm.HS512, customProperties.getSecretKey())
                 .setExpiration(getValidity(customProperties.getRefreshTokenValidityInSeconds()))
@@ -46,9 +46,9 @@ public class JWTService {
     Authentication getAuthentication(String token) {
         final Claims claims = getJwtClaims(token);
         final String role = claims.get(AUTHORITIES_KEY).toString();
-        final String principalUsername = claims.get(PRINCIPAL_USERNAME).toString();
+        final Optional<String> principalUsername = Optional.ofNullable(claims.get(PRINCIPAL_USERNAME)).map(Object::toString);
 
-        return new PreAuthenticatedAuthenticationToken(principalUsername, null, Collections.singletonList(new SimpleGrantedAuthority(role)));
+        return new PreAuthenticatedAuthenticationToken(principalUsername.orElse(null), null, Collections.singletonList(new SimpleGrantedAuthority(role)));
     }
 
     public Claims getJwtClaims(String token) {

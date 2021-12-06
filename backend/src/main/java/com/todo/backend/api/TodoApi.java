@@ -18,7 +18,6 @@ import com.todo.backend.repository.UserRepository;
 import com.todo.backend.repository.tuple.TodoTodosTuple;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,6 +99,6 @@ public class TodoApi {
                             final Status responseStatus = tuple.getTodo().getStatus();
                             return new TodosResponse(responseId, responseUserUsername, responseTask, responseDate, responseStatus);
                         })
-                .collect(Collectors.toList());
+                .toList();
     }
 }

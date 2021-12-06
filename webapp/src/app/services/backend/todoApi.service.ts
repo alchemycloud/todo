@@ -13,7 +13,7 @@ export class TodoApiService {
 
   private header() {
     return new HttpHeaders({
-      'Content-Type': this.applicationJson
+      'content-type': this.applicationJson
     });
   }
 
@@ -49,12 +49,12 @@ export class TodoApiService {
     );
   }
 
-  deleteTodo(request: DeleteTodoRequest): Observable<{}> {
-    return this.http.delete<{}>(
+  deleteTodo(request: DeleteTodoRequest): Observable<Record<string, never>> {
+    return this.http.delete<Record<string, never>>(
       environment.backendUrl + '/todo/${request.id}', {
         headers: this.header()
       }).pipe(
-      catchError(this.handleError<{}>('deleteTodo'))
+      catchError(this.handleError<Record<string, never>>('deleteTodo'))
     );
   }
 

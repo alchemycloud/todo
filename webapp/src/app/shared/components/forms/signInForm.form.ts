@@ -28,7 +28,7 @@ export class SignInFormModel {
   styleUrls: ['./signInForm.form.scss']
 })
 export class SignInForm implements OnInit, AfterViewInit {
-  @Input() model: SignInFormModel;
+  @Input() model: SignInFormModel = new SignInFormModel('', '');
   submitDisabled = false;
   formGroup: FormGroup;
   usernameControl: FormControl;
@@ -36,22 +36,20 @@ export class SignInForm implements OnInit, AfterViewInit {
 
   constructor(private readonly authenticationApi: AuthenticationApiService, private readonly sessionService: SessionService,
               private readonly router: Router, private readonly fb: FormBuilder) {
-    if (this.model == null) {
-      this.model = new SignInFormModel('', '');
-    }
+
   }
 
   ngOnInit(): void {
     this.init();
     this.formGroup = this.fb.group({
-      'username': new FormControl(this.model.username, [
+      username: new FormControl(this.model.username, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(128)], []),
-      'password': new FormControl(this.model.password, [
+      password: new FormControl(this.model.password, [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(255)], [])
+        Validators.minLength(12),
+        Validators.maxLength(128)], [])
     });
     this.usernameControl = this.formGroup.get('username') as FormControl;
     this.passwordControl = this.formGroup.get('password') as FormControl;

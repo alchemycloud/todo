@@ -60,7 +60,7 @@ export class Closed {
   styleUrls: ['./editTodo.form.scss']
 })
 export class EditTodo implements OnChanges, OnInit, AfterViewInit {
-  @Input() id: number;
+  @Input() id: number = null;
   @ViewChild(StatusDropDown)
   private readonly statusElement: StatusDropDown;
   model: EditTodoModel = new EditTodoModel(null, null, '', null, null);
@@ -83,16 +83,16 @@ export class EditTodo implements OnChanges, OnInit, AfterViewInit {
   ngOnInit(): void {
     this.init();
     this.formGroup = this.fb.group({
-      'userId': new FormControl(this.model.userId, [
+      userId: new FormControl(this.model.userId, [
         Validators.required,
         Validators.max(9223372036854775807)], []),
-      'task': new FormControl(this.model.task, [
+      task: new FormControl(this.model.task, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(255)], []),
-      'date': new FormControl(this.model.date, [
+      date: new FormControl(this.model.date, [
         Validators.required], []),
-      'status': new FormControl(this.model.status, [
+      status: new FormControl(this.model.status, [
         Validators.required], [])
     });
     this.userIdControl = this.formGroup.get('userId') as FormControl;

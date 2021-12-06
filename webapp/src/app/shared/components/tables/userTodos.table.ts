@@ -40,9 +40,9 @@ export class Selected {
 })
 export class UserTodos implements OnChanges, OnInit, AfterViewInit {
   resultsLength = 0;
-  @Input() userId: number;
-  @Input() fields: Array<TodoUserTodosSortField>;
-  @Input() directions: Array<SortOrder>;
+  @Input() userId: number = null;
+  @Input() fields: Array<TodoUserTodosSortField> = null;
+  @Input() directions: Array<SortOrder> = null;
   model: Array<UserTodosModel> = [];
   @Output() onSelected = new EventEmitter<Selected>();
   dataSource: MatTableDataSource<UserTodosModel> = new MatTableDataSource(this.model);
@@ -84,9 +84,7 @@ export class UserTodos implements OnChanges, OnInit, AfterViewInit {
       this.fields,
       this.directions))
       .subscribe((response: UserTodosResponse[]) => {
-        this.model = response.map(item => {
-          return new UserTodosModel(item.id, item.userId, item.task, item.date, item.status);
-        });
+        this.model = response.map(item => new UserTodosModel(item.id, item.userId, item.task, item.date, item.status));
         this.resultsLength = response.length;
       }, (_) => {
       });

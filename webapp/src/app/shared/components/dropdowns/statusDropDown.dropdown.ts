@@ -41,12 +41,12 @@ export class Selected {
   ]
 })
 export class StatusDropDown implements OnInit, AfterViewInit, ControlValueAccessor, DoCheck, MatFormFieldControl<Status>, OnDestroy {
-  @Input() selected: Status;
+  @Input() selected: Status = null;
   model: Array<Status> = [];
   @Output() onSelected = new EventEmitter<Selected>();
   @ViewChild(MatSelect) selectBox: ElementRef;
   isDisabled: boolean;
-  @Output() onTouched = new EventEmitter<Boolean>();
+  @Output() onTouched = new EventEmitter<boolean>();
   ngControl: any;
   needsFiltering: boolean;
   public filterCtrl: FormControl = new FormControl();
@@ -61,7 +61,7 @@ export class StatusDropDown implements OnInit, AfterViewInit, ControlValueAccess
 
     // manually setup a value accessor, to avoid circular deps
     this.ngControl = this.injector.get(NgControl);
-    if (this.ngControl != null) {
+    if (this.ngControl !== null) {
       this.ngControl.valueAccessor = this;
     }
 
@@ -184,7 +184,7 @@ export class StatusDropDown implements OnInit, AfterViewInit, ControlValueAccess
   focused = false;
 
   get empty() {
-    return this.selected == null;
+    return this.selected === null;
   }
 
   @HostBinding('class.floating')

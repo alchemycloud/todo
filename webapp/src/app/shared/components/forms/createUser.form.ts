@@ -52,7 +52,7 @@ export class Closed {
   styleUrls: ['./createUser.form.scss']
 })
 export class CreateUser implements OnInit, AfterViewInit {
-  @Input() model: CreateUserModel;
+  @Input() model: CreateUserModel = new CreateUserModel('', '', null, '', '');
   @ViewChild(UserRoleDropDown)
   private readonly roleElement: UserRoleDropDown;
   @Output() onClosed = new EventEmitter<Closed>();
@@ -66,33 +66,32 @@ export class CreateUser implements OnInit, AfterViewInit {
 
   constructor(@Optional() private readonly dialogRef: MatDialogRef<CreateUser>, @Inject(MAT_DIALOG_DATA) private readonly data: any,
               private readonly userApi: UserApiService, private readonly fb: FormBuilder) {
-    this.model = data.model;
+    if (data.model != null) {
+      this.model = data.model;
+    }
     if (data.onClosed) {
       this.onClosed.subscribe(data.onClosed);
-    }
-    if (this.model == null) {
-      this.model = new CreateUserModel('', '', null, '', '');
     }
   }
 
   ngOnInit(): void {
     this.init();
     this.formGroup = this.fb.group({
-      'firstName': new FormControl(this.model.firstName, [
+      firstName: new FormControl(this.model.firstName, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(40)], []),
-      'lastName': new FormControl(this.model.lastName, [
+      lastName: new FormControl(this.model.lastName, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)], []),
-      'role': new FormControl(this.model.role, [
+      role: new FormControl(this.model.role, [
         Validators.required], []),
-      'username': new FormControl(this.model.username, [
+      username: new FormControl(this.model.username, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(128)], []),
-      'passwordHash': new FormControl(this.model.passwordHash, [
+      passwordHash: new FormControl(this.model.passwordHash, [
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(128)], [])

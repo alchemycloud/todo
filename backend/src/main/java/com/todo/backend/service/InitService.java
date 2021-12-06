@@ -5,7 +5,6 @@ import com.todo.backend.model.DataVersion;
 import com.todo.backend.repository.DataProcessorLogRepository;
 import com.todo.backend.service.data.DataProcessor;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import liquibase.integration.spring.SpringLiquibase;
@@ -49,7 +48,7 @@ public class InitService {
                                                                         processor.compare(log.getMajor(), log.getMinor(), log.getRevision(), log.getNumber())
                                                                                 == 0))
                                 .sorted()
-                                .collect(Collectors.toList());
+                                .toList();
                 for (DataProcessor processor : missingProcessors) {
                     processor.process();
                 }

@@ -68,10 +68,8 @@ export class Todos implements OnInit, AfterViewInit {
   load() {
     this.todoApi.todos()
       .subscribe((response: TodosResponse[]) => {
-        this.model = response.map(item => {
-          return new TodosModel(item.id, item.userUsername, item.task, item.date,
-            item.status);
-        });
+        this.model = response.map(item => new TodosModel(item.id, item.userUsername, item.task, item.date,
+            item.status));
         this.resultsLength = response.length;
       }, (_) => {
       });

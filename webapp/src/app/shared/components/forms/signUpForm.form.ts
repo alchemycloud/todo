@@ -29,7 +29,7 @@ export class SignUpFormModel {
   styleUrls: ['./signUpForm.form.scss']
 })
 export class SignUpForm implements OnInit, AfterViewInit {
-  @Input() model: SignUpFormModel;
+  @Input() model: SignUpFormModel = new SignUpFormModel('', '', '', '');
   submitDisabled = false;
   formGroup: FormGroup;
   firstNameControl: FormControl;
@@ -39,31 +39,29 @@ export class SignUpForm implements OnInit, AfterViewInit {
 
   constructor(private readonly authenticationApi: AuthenticationApiService, private readonly sessionService: SessionService,
               private readonly router: Router, private readonly fb: FormBuilder) {
-    if (this.model == null) {
-      this.model = new SignUpFormModel('', '', '', '');
-    }
+
   }
 
   ngOnInit(): void {
     this.init();
     this.formGroup = this.fb.group({
-      'firstName': new FormControl(this.model.firstName, [
+      firstName: new FormControl(this.model.firstName, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(40)], []),
-      'lastName': new FormControl(this.model.lastName, [
+      lastName: new FormControl(this.model.lastName, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(60)], []),
-      'username': new FormControl(this.model.username, [
+      username: new FormControl(this.model.username, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(128)], []),
-      'password': new FormControl(this.model.password, [
+      password: new FormControl(this.model.password, [
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(255),
-        Validators.pattern(/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z*&@%+/_'!#$^?:.(\\)\\[\\]{}~\\-]{8,}$/)], [])
+        Validators.minLength(12),
+        Validators.maxLength(128),
+        Validators.pattern(/^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){12,128}$/)], [])
     });
     this.firstNameControl = this.formGroup.get('firstName') as FormControl;
     this.lastNameControl = this.formGroup.get('lastName') as FormControl;

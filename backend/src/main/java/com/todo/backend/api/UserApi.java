@@ -22,7 +22,6 @@ import com.todo.backend.repository.UserRepository;
 import com.todo.backend.repository.util.OrderableField;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,7 +113,7 @@ public class UserApi {
                             final String responsePasswordHash = model.getPasswordHash();
                             return new UsersResponse(responseId, responseFirstName, responseLastName, responseRole, responseUsername, responsePasswordHash);
                         })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<UserTodosResponse> userTodos(UserTodosRequest dto) {
@@ -133,6 +132,6 @@ public class UserApi {
                             final Status responseStatus = model.getStatus();
                             return new UserTodosResponse(responseId, responseUserId, responseTask, responseDate, responseStatus);
                         })
-                .collect(Collectors.toList());
+                .toList();
     }
 }

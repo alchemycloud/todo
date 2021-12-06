@@ -14,7 +14,7 @@ export class AuthenticationApiService {
 
   private header() {
     return new HttpHeaders({
-      'Content-Type': this.applicationJson
+      'content-type': this.applicationJson
     });
   }
 
@@ -34,12 +34,12 @@ export class AuthenticationApiService {
     );
   }
 
-  signUp(request: SignUpRequest): Observable<{}> {
-    return this.http.post<{}>(
+  signUp(request: SignUpRequest): Observable<Record<string, never>> {
+    return this.http.post<Record<string, never>>(
       environment.backendUrl + '/sign-up', request, {
         headers: this.header()
       }).pipe(
-      catchError(this.handleError<{}>('signUp'))
+      catchError(this.handleError<Record<string, never>>('signUp'))
     );
   }
 
@@ -65,12 +65,12 @@ export class AuthenticationApiService {
   }
 
 
-  changePassword(request: ChangePasswordRequest): Observable<{}> {
-    return this.http.post<{}>(
+  changePassword(request: ChangePasswordRequest): Observable<Record<string, never>> {
+    return this.http.post<Record<string, never>>(
       environment.backendUrl + '/change-password', request, {
         headers: this.header()
       }).pipe(
-      catchError(this.handleError<{}>('changePassword'))
+      catchError(this.handleError<Record<string, never>>('changePassword'))
     );
   }
 

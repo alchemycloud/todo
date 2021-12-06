@@ -49,7 +49,7 @@ export class Closed {
   styleUrls: ['./createTodo.form.scss']
 })
 export class CreateTodo implements OnInit, AfterViewInit {
-  @Input() model: CreateTodoModel;
+  @Input() model: CreateTodoModel = new CreateTodoModel(null, '', null, null);
   @ViewChild(StatusDropDown)
   private readonly statusElement: StatusDropDown;
   @Output() onClosed = new EventEmitter<Closed>();
@@ -62,28 +62,27 @@ export class CreateTodo implements OnInit, AfterViewInit {
 
   constructor(@Optional() private readonly dialogRef: MatDialogRef<CreateTodo>, @Inject(MAT_DIALOG_DATA) private readonly data: any,
               private readonly todoApi: TodoApiService, private readonly fb: FormBuilder) {
-    this.model = data.model;
+    if (data.model != null) {
+      this.model = data.model;
+    }
     if (data.onClosed) {
       this.onClosed.subscribe(data.onClosed);
-    }
-    if (this.model == null) {
-      this.model = new CreateTodoModel(null, '', null, null);
     }
   }
 
   ngOnInit(): void {
     this.init();
     this.formGroup = this.fb.group({
-      'userId': new FormControl(this.model.userId, [
+      userId: new FormControl(this.model.userId, [
         Validators.required,
         Validators.max(9223372036854775807)], []),
-      'task': new FormControl(this.model.task, [
+      task: new FormControl(this.model.task, [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(255)], []),
-      'date': new FormControl(this.model.date, [
+      date: new FormControl(this.model.date, [
         Validators.required], []),
-      'status': new FormControl(this.model.status, [
+      status: new FormControl(this.model.status, [
         Validators.required], [])
     });
     this.userIdControl = this.formGroup.get('userId') as FormControl;
